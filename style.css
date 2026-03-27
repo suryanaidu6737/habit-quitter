@@ -1,0 +1,72 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  text-align: center;
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  margin: 50px auto;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.input-section input {
+  padding: 10px;
+  width: 60%;
+  border: none;
+  border-radius: 5px;
+}
+
+.input-section button {
+  padding: 10px;
+  border: none;
+  background: #ff7b00;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.habit {
+  background: white;
+  color: black;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+}
+
+button {
+  margin: 5px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reset {
+  background: red;
+  color: white;
+}
+
+.delete {
+  background: black;
+  color: white;
+}
+
+.motivation {
+  font-style: italic;
+  color: green;
+}
+.dark {
+  background: #121212;
+  color: white;
+}
+
+.dark .habit {
+  background: #1e1e1e;
+  color: white;
+}
