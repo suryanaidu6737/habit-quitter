@@ -35,6 +35,10 @@ function updateTodayStatus(habit, status) {
   }
 }
 
+function goProfile() {
+  window.location.href = "profile.html";
+}
+
 // ➕ Add Habit
 function addHabit() {
   let name = habitInput.value.trim();

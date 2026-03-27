@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>⚡ Break Your Limits</title>
+  <title>Break Your Limits</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
 
-  <h1>⚡ Break Your Limits ⚡</h1>
+  <!-- HOME HEADER ONLY -->
+  <div id="homeHeader">
+    <h1>⚡ Break Your Limits ⚡</h1>
 
-  <div class="top-bar">
-    <button onclick="window.location.href='profile.html'">👤 Profile</button>
-    <button onclick="logout()">Logout</button>
+    <div class="top-bar">
+      <button onclick="goProfile()">👤 Profile</button>
+      <button onclick="logout()">Logout</button>
+    </div>
   </div>
 
+  <!-- INPUT -->
   <div id="homeControls" class="input-section">
     <input type="text" id="habitInput" placeholder="Enter habit to quit...">
     <button onclick="addHabit()">Add</button>
     <button onclick="toggleDarkMode()">🌙</button>
   </div>
 
+  <!-- CARDS -->
   <div id="habitList"></div>
 
+  <!-- DETAIL VIEW -->
   <div id="detailView" style="display:none;">
     <button onclick="closeDetail()">⬅ Back</button>
     <h2 id="detailTitle"></h2>
+
     <canvas id="detailChart"></canvas>
     <div id="heatmap"></div>
   </div>
