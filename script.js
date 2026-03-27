@@ -14,6 +14,19 @@ function saveData() {
   localStorage.setItem("habits", JSON.stringify(habits));
 }
 
+// ✅ Prevent duplicate entries
+function updateTodayStatus(habit, status) {
+  let today = new Date().toDateString();
+
+  let existing = habit.history.find(h => h.date === today);
+
+  if (existing) {
+    existing.status = status;
+  } else {
+    habit.history.push({ date: today, status });
+  }
+}
+
 // Add habit
 function addHabit() {
   let input = document.getElementById("habitInput");
@@ -44,12 +57,11 @@ function displayHabits() {
 
   habits.forEach((habit, index) => {
 
-    // Fix: ensure history is not empty
     if (!habit.history) habit.history = [];
 
     if (habit.lastUpdated !== today) {
       habit.streak++;
-      habit.history.push({ date: today, status: "success" });
+      updateTodayStatus(habit, "success");
       habit.lastUpdated = today;
     }
 
@@ -75,7 +87,7 @@ function displayHabits() {
   saveData();
 }
 
-// Delete habit ✅ FIXED
+// Delete
 function deleteHabit(index) {
   if (confirm("Delete this habit?")) {
     habits.splice(index, 1);
@@ -84,48 +96,44 @@ function deleteHabit(index) {
   }
 }
 
-// Reset habit
+// Relapse
 function resetHabit(index) {
-  habits[index].streak = 0;
-  habits[index].lastRelapse = new Date().toDateString();
+  let habit = habits[index];
 
-  habits[index].history.push({
-    date: new Date().toDateString(),
-    status: "fail"
-  });
+  habit.streak = 0;
+  habit.lastRelapse = new Date().toDateString();
+
+  updateTodayStatus(habit, "fail");
 
   saveData();
   displayHabits();
 }
 
-// Open detail view ✅ FIXED
+// Detail view
 function openDetail(index) {
   let habit = habits[index];
 
-  document.getElementById("detailView").style.display = "block";
   document.getElementById("habitList").style.display = "none";
+  document.getElementById("homeControls").style.display = "none";
+  document.getElementById("detailView").style.display = "block";
 
   document.getElementById("detailTitle").innerText = habit.name;
 
-  // Fix: ensure at least 1 data point
   if (habit.history.length === 0) {
-    habit.history.push({
-      date: new Date().toDateString(),
-      status: "success"
-    });
+    updateTodayStatus(habit, "success");
   }
 
   renderChart(habit);
   renderHeatmap(habit);
 }
 
-// Back button
 function closeDetail() {
-  document.getElementById("detailView").style.display = "none";
   document.getElementById("habitList").style.display = "grid";
+  document.getElementById("homeControls").style.display = "block";
+  document.getElementById("detailView").style.display = "none";
 }
 
-// Chart fix ✅
+// Chart
 function renderChart(habit) {
   let ctx = document.getElementById("detailChart");
 
@@ -143,9 +151,6 @@ function renderChart(habit) {
         data,
         tension: 0.3
       }]
-    },
-    options: {
-      responsive: true
     }
   });
 }

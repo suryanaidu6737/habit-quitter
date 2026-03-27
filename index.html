@@ -7,30 +7,30 @@
 </head>
 <body>
 
-  <div class="container">
-    <h1>⚡ Break Your Limits ⚡</h1>
+<div class="container">
+  <h1>⚡ Break Your Limits ⚡</h1>
 
-    <div class="input-section">
-      <input type="text" id="habitInput" placeholder="Enter habit to quit...">
-      <button onclick="addHabit()">Add</button>
-      <button onclick="toggleDarkMode()">🌙</button>
-    </div>
-
-    <!-- Habit Cards -->
-    <div id="habitList"></div>
-
-    <!-- Detail View -->
-    <div id="detailView" style="display:none;">
-      <button onclick="closeDetail()">⬅ Back</button>
-      <h2 id="detailTitle"></h2>
-
-      <canvas id="detailChart"></canvas>
-      <div id="heatmap"></div>
-    </div>
+  <!-- Home Controls -->
+  <div id="homeControls" class="input-section">
+    <input type="text" id="habitInput" placeholder="Enter habit to quit...">
+    <button onclick="addHabit()">Add</button>
+    <button onclick="toggleDarkMode()">🌙</button>
   </div>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="script.js"></script>
+  <!-- Habit Cards -->
+  <div id="habitList"></div>
+
+  <!-- Detail View -->
+  <div id="detailView" style="display:none;">
+    <button onclick="closeDetail()">⬅ Back</button>
+    <h2 id="detailTitle"></h2>
+
+    <canvas id="detailChart"></canvas>
+    <div id="heatmap"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

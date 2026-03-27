@@ -9,7 +9,7 @@ body {
 
 h1 {
   color: #f97316;
-  text-shadow: 0 0 10px #f97316, 0 0 20px #fb923c;
+  text-shadow: 0 0 10px #f97316;
 }
 
 .container {
@@ -47,18 +47,15 @@ h1 {
   padding: 20px;
   cursor: pointer;
   transition: 0.4s;
-  position: relative;
-  overflow: hidden;
 }
 
 .habit:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 0 25px #f97316;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #f97316;
 }
 
-.habit h3 {
-  color: #38bdf8;
-}
+.reset { background: red; color: white; }
+.delete { background: black; color: white; }
 
 canvas {
   margin-top: 20px;
