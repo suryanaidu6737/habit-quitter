@@ -1,45 +1,39 @@
-// 🔐 Check login
 let currentUser = localStorage.getItem("currentUser");
 if (!currentUser) window.location.href = "login.html";
 
-// 🌙 Dark Mode Init
-let darkMode = localStorage.getItem("darkMode") === "true";
-if (darkMode) document.body.classList.add("dark");
-
-// 📦 Load user habits
 let habits = JSON.parse(localStorage.getItem("habits_" + currentUser)) || [];
 let detailChart;
 
-// 💾 Save data
-function saveData() {
-  localStorage.setItem("habits_" + currentUser, JSON.stringify(habits));
+/* MENU */
+function toggleMenu() {
+  let m = dropdownMenu;
+  m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 
-// 🌙 Toggle Dark Mode
-function toggleDarkMode() {
-  document.body.classList.toggle("dark");
-
-  let isDark = document.body.classList.contains("dark");
-  localStorage.setItem("darkMode", isDark);
-}
-
-// ✅ Ensure only ONE entry per day
-function updateTodayStatus(habit, status) {
-  let today = new Date().toDateString();
-  let existing = habit.history.find(h => h.date === today);
-
-  if (existing) {
-    existing.status = status;
-  } else {
-    habit.history.push({ date: today, status });
+window.onclick = function(e) {
+  if (!e.target.matches('.menu-btn')) {
+    dropdownMenu.style.display = "none";
   }
-}
+};
 
 function goProfile() {
   window.location.href = "profile.html";
 }
 
-// ➕ Add Habit
+/* DATA */
+function saveData() {
+  localStorage.setItem("habits_" + currentUser, JSON.stringify(habits));
+}
+
+function updateTodayStatus(h, status) {
+  let today = new Date().toDateString();
+  let ex = h.history.find(x => x.date === today);
+
+  if (ex) ex.status = status;
+  else h.history.push({ date: today, status });
+}
+
+/* ADD */
 function addHabit() {
   let name = habitInput.value.trim();
   if (!name) return alert("Enter habit");
@@ -57,14 +51,13 @@ function addHabit() {
   displayHabits();
 }
 
-// 🧾 Display Cards
+/* DISPLAY */
 function displayHabits() {
   habitList.innerHTML = "";
   let today = new Date().toDateString();
 
   habits.forEach((h, i) => {
 
-    // Daily auto-update (only once)
     if (h.lastUpdated !== today) {
       h.streak++;
       updateTodayStatus(h, "success");
@@ -78,8 +71,8 @@ function displayHabits() {
 
     div.innerHTML = `
       <h3>${h.name}</h3>
-      <p>🔥 ${h.streak} days</p>
-      <p>🏆 Best: ${h.best}</p>
+      <p>🔥 ${h.streak}</p>
+      <p>🏆 ${h.best}</p>
 
       <button onclick="event.stopPropagation(); resetHabit(${i})" class="reset">Relapse</button>
       <button onclick="event.stopPropagation(); deleteHabit(${i})" class="delete">Delete</button>
@@ -92,16 +85,15 @@ function displayHabits() {
   saveData();
 }
 
-// 🗑 Delete Habit
+/* ACTIONS */
 function deleteHabit(i) {
-  if (confirm("Delete this habit?")) {
+  if (confirm("Delete?")) {
     habits.splice(i, 1);
     saveData();
     displayHabits();
   }
 }
 
-// ❌ Relapse
 function resetHabit(i) {
   habits[i].streak = 0;
   updateTodayStatus(habits[i], "fail");
@@ -109,13 +101,14 @@ function resetHabit(i) {
   displayHabits();
 }
 
-// 📊 Open Detail View
+/* DETAIL */
 function openDetail(i) {
   let h = habits[i];
 
   habitList.style.display = "none";
   homeControls.style.display = "none";
   detailView.style.display = "block";
+  homeHeader.style.display = "none";
 
   detailTitle.innerText = h.name;
 
@@ -123,52 +116,34 @@ function openDetail(i) {
   renderHeatmap(h);
 }
 
-// 🔙 Back to Home
 function closeDetail() {
   habitList.style.display = "grid";
   homeControls.style.display = "block";
   detailView.style.display = "none";
+  homeHeader.style.display = "block";
 }
 
-// 📈 Render Chart
+/* CHART */
 function renderChart(h) {
-  let ctx = document.getElementById("detailChart");
-
   let labels = h.history.map(x => x.date);
   let data = h.history.map(x => x.status === "success" ? 1 : 0);
 
   if (detailChart) detailChart.destroy();
 
-  detailChart = new Chart(ctx, {
+  detailChart = new Chart(detailChartCanvas, {
     type: "line",
-    data: {
-      labels,
-      datasets: [{
-        label: "Progress",
-        data,
-        tension: 0.3
-      }]
-    },
-    options: {
-      responsive: true
-    }
+    data: { labels, datasets: [{ data }] }
   });
 }
 
-// 🔥 Heatmap
+/* HEATMAP */
 function renderHeatmap(h) {
   heatmap.innerHTML = "";
-
   h.history.slice(-30).forEach(d => {
     let div = document.createElement("div");
-    div.className = "day";
-
-    if (d.status === "success") div.classList.add("success");
-    else div.classList.add("fail");
-
+    div.className = "day " + (d.status === "success" ? "success" : "fail");
     heatmap.appendChild(div);
   });
 }
 
-// 🚀 Init
 displayHabits();

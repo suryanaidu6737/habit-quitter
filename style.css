@@ -16,23 +16,41 @@ h1 {
   color: #f97316;
 }
 
-.top-bar {
-  margin-bottom: 10px;
+/* MENU */
+.menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
-button {
-  padding: 10px 15px;
-  margin: 5px;
-  border: none;
+.menu-btn {
+  font-size: 20px;
+  background: #1e293b;
+  color: white;
+}
+
+.dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  background: #1e293b;
   border-radius: 6px;
-  cursor: pointer;
+  margin-top: 5px;
 }
 
-/* Input */
-.input-section {
-  margin-top: 10px;
+.dropdown button {
+  background: none;
+  color: white;
+  padding: 10px;
+  text-align: left;
 }
 
+.dropdown button:hover {
+  background: #334155;
+}
+
+/* INPUT */
 input {
   padding: 10px;
   width: 60%;
@@ -40,7 +58,15 @@ input {
   border: none;
 }
 
-/* Cards */
+button {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+/* CARDS */
 #habitList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -62,14 +88,12 @@ input {
 .reset { background: red; color: white; }
 .delete { background: black; color: white; }
 
-/* Chart */
+/* DETAIL */
 canvas {
   margin-top: 20px;
   background: #020617;
-  border-radius: 10px;
 }
 
-/* Heatmap */
 #heatmap {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -80,32 +104,21 @@ canvas {
 .day {
   width: 25px;
   height: 25px;
-  border-radius: 4px;
 }
 
 .success { background: #22c55e; }
 .fail { background: #ef4444; }
 
-/* Auth UI */
+/* AUTH */
 .auth-box {
   width: 320px;
   margin: 120px auto;
   padding: 30px;
-  border-radius: 10px;
   background: #1e293b;
+  border-radius: 10px;
 }
 
 .auth-box input {
   width: 100%;
-  padding: 10px;
   margin: 10px 0;
-  border-radius: 6px;
-  border: none;
-}
-
-.auth-box button {
-  width: 100%;
-  padding: 10px;
-  background: #f97316;
-  color: white;
 }
