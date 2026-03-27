@@ -1,3 +1,4 @@
+/* ===== BASE ===== */
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(to right, #0f172a, #020617);
@@ -6,6 +7,19 @@ body {
   text-align: center;
 }
 
+/* 🌙 DARK MODE */
+body.dark {
+  background: #020617;
+  color: #e2e8f0;
+}
+
+/* ensure light mode restores properly */
+body:not(.dark) {
+  background: linear-gradient(to right, #0f172a, #020617);
+  color: white;
+}
+
+/* ===== LAYOUT ===== */
 .container {
   width: 90%;
   max-width: 900px;
@@ -16,7 +30,7 @@ h1 {
   color: #f97316;
 }
 
-/* MENU */
+/* ===== MENU (TOP RIGHT) ===== */
 .menu-container {
   position: absolute;
   top: 20px;
@@ -25,8 +39,14 @@ h1 {
 
 .menu-btn {
   font-size: 20px;
+  padding: 8px 12px;
   background: #1e293b;
   color: white;
+  border-radius: 6px;
+}
+
+body.dark .menu-btn {
+  background: #020617;
 }
 
 .dropdown {
@@ -37,6 +57,11 @@ h1 {
   background: #1e293b;
   border-radius: 6px;
   margin-top: 5px;
+  overflow: hidden;
+}
+
+body.dark .dropdown {
+  background: #020617;
 }
 
 .dropdown button {
@@ -44,18 +69,28 @@ h1 {
   color: white;
   padding: 10px;
   text-align: left;
+  width: 150px;
 }
 
 .dropdown button:hover {
   background: #334155;
 }
 
-/* INPUT */
+/* ===== INPUT SECTION ===== */
+.input-section {
+  margin-top: 10px;
+}
+
 input {
   padding: 10px;
   width: 60%;
   border-radius: 6px;
   border: none;
+}
+
+body.dark input {
+  background: #1e293b;
+  color: white;
 }
 
 button {
@@ -66,7 +101,7 @@ button {
   cursor: pointer;
 }
 
-/* CARDS */
+/* ===== HABIT CARDS ===== */
 #habitList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -79,37 +114,72 @@ button {
   padding: 20px;
   border-radius: 10px;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+body.dark .habit {
+  background: #020617;
 }
 
 .habit:hover {
   background: #334155;
+  transform: scale(1.03);
 }
 
-.reset { background: red; color: white; }
-.delete { background: black; color: white; }
+/* buttons inside cards */
+.reset {
+  background: #ef4444;
+  color: white;
+}
 
-/* DETAIL */
+.delete {
+  background: black;
+  color: white;
+}
+
+/* ===== DETAIL VIEW ===== */
+/* Chart container */
 canvas {
   margin-top: 20px;
   background: #020617;
+  border-radius: 10px;
+  padding: 10px;
 }
 
+/* DARK MODE FIX */
+body.dark canvas {
+  background: #0f172a;   /* lighter than page */
+  border: 1px solid #1e293b;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+body.dark canvas:hover {
+  box-shadow: 0 6px 15px rgba(0,0,0,0.7);
+}
+
+/* ===== HEATMAP ===== */
 #heatmap {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  gap: 5px;
+  gap: 6px;
   margin-top: 20px;
+  justify-items: center;
 }
 
 .day {
   width: 25px;
   height: 25px;
+  border-radius: 6px; /* 🔥 rounded squares */
 }
 
-.success { background: #22c55e; }
-.fail { background: #ef4444; }
+.success {
+  background: #22c55e;
+}
 
-/* AUTH */
+.fail {
+  background: #ef4444;
+}
+
+/* ===== AUTH (LOGIN / SIGNUP / PROFILE) ===== */
 .auth-box {
   width: 320px;
   margin: 120px auto;
@@ -118,7 +188,36 @@ canvas {
   border-radius: 10px;
 }
 
+body.dark .auth-box {
+  background: #020617;
+}
+
 .auth-box input {
   width: 100%;
+  padding: 10px;
   margin: 10px 0;
+  border-radius: 6px;
+  border: none;
+}
+
+.auth-box button {
+  width: 100%;
+  padding: 10px;
+  background: #f97316;
+  color: white;
+  border-radius: 6px;
+}
+
+/* ===== SMALL ENHANCEMENTS ===== */
+button:hover {
+  opacity: 0.9;
+}
+body.dark .habit {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+body.dark .habit:hover {
+  background: #1e293b;
+  transform: scale(1.03);
 }

@@ -1,3 +1,4 @@
+// 🔐 Auth check
 let currentUser = localStorage.getItem("currentUser");
 if (!currentUser) window.location.href = "login.html";
 
@@ -10,20 +11,26 @@ function initDarkMode() {
 
   if (isDark) {
     document.body.classList.add("dark");
-    if (themeBtn) themeBtn.innerText = "☀️";
+    themeBtn.innerText = "☀️";
+  } else {
+    document.body.classList.remove("dark");
+    themeBtn.innerText = "🌙";
   }
 }
 initDarkMode();
 
 /* 🌙 TOGGLE */
 function toggleDarkMode() {
-  document.body.classList.toggle("dark");
-
   let isDark = document.body.classList.contains("dark");
-  localStorage.setItem("darkMode", isDark);
 
-  if (themeBtn) {
-    themeBtn.innerText = isDark ? "☀️" : "🌙";
+  if (isDark) {
+    document.body.classList.remove("dark");
+    localStorage.setItem("darkMode", "false");
+    themeBtn.innerText = "🌙";
+  } else {
+    document.body.classList.add("dark");
+    localStorage.setItem("darkMode", "true");
+    themeBtn.innerText = "☀️";
   }
 }
 
@@ -144,7 +151,7 @@ function closeDetail() {
   homeHeader.style.display = "block";
 }
 
-/* CHART */
+/* 📊 CHART FIXED */
 function renderChart(h) {
   let ctx = document.getElementById("detailChart").getContext("2d");
 
@@ -155,11 +162,18 @@ function renderChart(h) {
 
   detailChart = new Chart(ctx, {
     type: "line",
-    data: { labels, datasets: [{ data }] }
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Progress", // ✅ FIXED
+        data: data,
+        tension: 0.3
+      }]
+    }
   });
 }
 
-/* HEATMAP */
+/* 🔥 HEATMAP */
 function renderHeatmap(h) {
   heatmap.innerHTML = "";
   h.history.slice(-30).forEach(d => {
@@ -169,4 +183,5 @@ function renderHeatmap(h) {
   });
 }
 
+/* INIT */
 displayHabits();
