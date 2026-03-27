@@ -4,10 +4,33 @@ if (!currentUser) window.location.href = "login.html";
 let habits = JSON.parse(localStorage.getItem("habits_" + currentUser)) || [];
 let detailChart;
 
+/* 🌙 INIT DARK MODE */
+function initDarkMode() {
+  let isDark = localStorage.getItem("darkMode") === "true";
+
+  if (isDark) {
+    document.body.classList.add("dark");
+    if (themeBtn) themeBtn.innerText = "☀️";
+  }
+}
+initDarkMode();
+
+/* 🌙 TOGGLE */
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+
+  let isDark = document.body.classList.contains("dark");
+  localStorage.setItem("darkMode", isDark);
+
+  if (themeBtn) {
+    themeBtn.innerText = isDark ? "☀️" : "🌙";
+  }
+}
+
 /* MENU */
 function toggleMenu() {
-  let m = dropdownMenu;
-  m.style.display = m.style.display === "flex" ? "none" : "flex";
+  dropdownMenu.style.display =
+    dropdownMenu.style.display === "flex" ? "none" : "flex";
 }
 
 window.onclick = function(e) {
@@ -87,11 +110,9 @@ function displayHabits() {
 
 /* ACTIONS */
 function deleteHabit(i) {
-  if (confirm("Delete?")) {
-    habits.splice(i, 1);
-    saveData();
-    displayHabits();
-  }
+  habits.splice(i, 1);
+  saveData();
+  displayHabits();
 }
 
 function resetHabit(i) {
@@ -125,12 +146,14 @@ function closeDetail() {
 
 /* CHART */
 function renderChart(h) {
+  let ctx = document.getElementById("detailChart").getContext("2d");
+
   let labels = h.history.map(x => x.date);
   let data = h.history.map(x => x.status === "success" ? 1 : 0);
 
   if (detailChart) detailChart.destroy();
 
-  detailChart = new Chart(detailChartCanvas, {
+  detailChart = new Chart(ctx, {
     type: "line",
     data: { labels, datasets: [{ data }] }
   });
