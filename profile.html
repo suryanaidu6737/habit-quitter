@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="auth-box">
+  <h2>👤 Profile</h2>
+
+  <p id="username"></p>
+  <p id="totalHabits"></p>
+
+  <button onclick="logout()">Logout</button>
+</div>
+
+<script src="auth.js"></script>
+
+<script>
+let user = localStorage.getItem("currentUser");
+document.getElementById("username").innerText = "User: " + user;
+
+let habits = JSON.parse(localStorage.getItem("habits_" + user)) || [];
+document.getElementById("totalHabits").innerText = "Total Habits: " + habits.length;
+</script>
+
+</body>
+</html>
